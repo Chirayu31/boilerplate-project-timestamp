@@ -33,10 +33,19 @@ app.get("/api/:date",function(req,res){
   if(!isNaN(paraDate)){
     let date = new Date(parseInt(paraDate));
     res.json({unix: date.getTime() ,utc:date.toUTCString()});
-  }else {
+  }else{
     let date = new Date(paraDate);
-    res.json({unix: date.getTime() ,utc:date.toUTCString()});
+    if(date.toUTCString() === "Invalid Date") {
+      res.json({ error: "Invalid Date" });
+    }else{
+      res.json({unix: date.getTime() ,utc:date.toUTCString()});
+    }
   }
+});
+
+app.get("/api/",function(req,res){
+  let date = new Date();
+    res.json({unix: date.getTime() ,utc:date.toUTCString()});
 });
 
 
